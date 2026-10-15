@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
@@ -36,8 +36,13 @@
   <div class="race-stage">
     <div class="race-row">
       <figure class="stim">
+        <div class="stim-head">Stimulus</div>
         <div class="stim-frame"><img id="heroStim" src="assets/stimuli/dog.jpg" alt="Stimulus shown on this trial"><canvas id="heroNoise" aria-hidden="true"></canvas></div>
-        <figcaption id="heroStimCap">Stimulus</figcaption>
+        <figcaption class="stim-meta">
+          <span class="stim-label" id="heroStimCap">dog</span>
+          <span class="stim-clar">clarity <b id="heroClarityV">–</b></span>
+        </figcaption>
+        <div class="meter" aria-hidden="true"><i id="heroClarity"></i></div>
       </figure>
       <canvas id="hero" aria-label="Animated simulation: four evidence accumulators race towards a stimulus-dependent threshold" role="img"></canvas>
     </div>
@@ -236,6 +241,6 @@
   <div class="wrap">Simulations on this page are simplified, illustrative races written for this site; they are not the trained NRM. All reported numbers come from the paper. Stimulus photos: Wikimedia Commons, CC0 (<a href="https://commons.wikimedia.org/wiki/File:Domestic_shorthair_cat_portrait_in_grass.jpg">cat</a>, <a href="https://commons.wikimedia.org/wiki/File:Dog_resting_on_the_grass.jpg">dog</a>, <a href="https://commons.wikimedia.org/wiki/File:PINK_AUTOMOBILE_MANUFACTURED_BY_CADILLAC.jpg">car</a>, <a href="https://commons.wikimedia.org/wiki/File:Blue_fishing_boat_harbour_Eretria_Euboea_Greece.jpg">boat</a>).</div>
 </footer>
 
-<script src="main.js"></script>
+<script src="main.js?v=3"></script>
 </body>
 </html>

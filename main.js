@@ -58,6 +58,8 @@ function heroTrial(){
 const heroStim = document.getElementById('heroStim');
 const heroNoise = document.getElementById('heroNoise');
 const heroCap = document.getElementById('heroStimCap');
+const heroClar = document.getElementById('heroClarity');
+const heroClarV = document.getElementById('heroClarityV');
 function heroShowStimulus(tr){
   const deg = 1 - tr.clarity;
   if(heroStim){
@@ -78,19 +80,26 @@ function heroShowStimulus(tr){
       ctx.fillRect(x*cw, y*ch, cw+0.5, ch+0.5);
     }
   }
-  if(heroCap) heroCap.textContent = `Stimulus: ${LABELS[tr.target]} · clarity ${Math.round(100*tr.clarity)}%`;
+  // The label takes the colour of its accumulator, tying the image to its trace.
+  const pct = Math.round(100*tr.clarity);
+  if(heroCap){ heroCap.textContent = LABELS[tr.target]; heroCap.style.color = HCOL[tr.target]; }
+  if(heroClarV) heroClarV.textContent = pct + '%';
+  if(heroClar){ heroClar.style.width = Math.max(4, pct) + '%'; heroClar.style.backgroundColor = HCOL[tr.target]; }
 }
 function heroDraw(tr, upto){
   const {ctx,w,h} = setup(heroCv, window.innerWidth<600?240:320);
-  const L=44,R=16,Tp=18,B=30, pw=w-L-R, ph=h-Tp-B;
+  // Narrow canvases (phones, beside the stimulus card) get a tighter margin
+  // and one tick per second so the axis labels never collide.
+  const narrow = w < 320;
+  const L=narrow?28:44,R=narrow?30:16,Tp=18,B=30, pw=w-L-R, ph=h-Tp-B;
   const ymin=-0.8, ymax=2.0;
   const xs = j => L + pw*(j/tr.n), ys = v => Tp + ph*(1-(v-ymin)/(ymax-ymin));
   ctx.clearRect(0,0,w,h);
   // axes
   ctx.strokeStyle=COL.rule; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(L,ys(0)); ctx.lineTo(w-R,ys(0)); ctx.stroke();
   ctx.fillStyle=COL.muted; ctx.font='12px "Instrument Sans",sans-serif';
-  for(let s=0;s<tr.T;s+=0.5){ const x=L+pw*(s/tr.T); ctx.fillText((s*1000)+' ms', x-14, h-8); }
-  ctx.save(); ctx.translate(12, Tp+ph/2+28); ctx.rotate(-Math.PI/2); ctx.fillText('evidence', 0,0); ctx.restore();
+  for(let s=0;s<tr.T;s+=(narrow?1:0.5)){ const x=L+pw*(s/tr.T); ctx.fillText(narrow?(s+' s'):((s*1000)+' ms'), narrow?x-6:x-14, h-8); }
+  ctx.save(); ctx.translate(narrow?10:12, Tp+ph/2+28); ctx.rotate(-Math.PI/2); ctx.fillText('evidence', 0,0); ctx.restore();
   // threshold
   ctx.strokeStyle=COL.thr; ctx.setLineDash([7,5]); ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(L,ys(tr.theta)); ctx.lineTo(w-R,ys(tr.theta)); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle=COL.thr; ctx.font='600 12px "Instrument Sans",sans-serif'; ctx.fillText('Θ(c)', L+4, ys(tr.theta)-6);
