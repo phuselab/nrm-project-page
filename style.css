@@ -42,6 +42,14 @@ header.hero{padding-top:3.2rem;padding-bottom:2.5rem}
 .btn svg{width:1rem;height:1rem}
 .race-stage{background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:1rem 1rem .8rem;position:relative}
 .race-stage canvas{width:100%;height:320px;display:block}
+.race-row{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:1rem;align-items:center}
+.race-row #hero{min-width:0}
+.stim{margin:0}
+.stim-frame{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#111;border:1px solid var(--rule)}
+.stim-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .25s}
+.race-stage .stim-frame canvas{position:absolute;inset:0;width:100%;height:100%}
+.stim figcaption{font-family:var(--sans);font-size:.82rem;color:var(--muted);margin-top:.4rem;text-align:center}
+@media (max-width:600px){.race-row{grid-template-columns:1fr}.stim{max-width:180px;margin:0 auto}}
 .stage-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.5rem}
 .readout{font-family:var(--sans);font-size:.95rem;color:var(--muted);min-height:1.5em}
 .readout b{color:var(--ink);font-weight:600}

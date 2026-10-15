@@ -49,7 +49,36 @@ function heroTrial(){
     if(hit<0){ for(let i=0;i<4;i++){ if(X[i][j]>=theta){ hit=j; } } if(hit>0){ let m=-1e9; for(let i=0;i<4;i++){ if(X[i][j]>m){m=X[i][j];win=i;} } } }
   }
   if(hit<0){ hit=n; let m=-1e9; for(let i=0;i<4;i++) if(X[i][n]>m){m=X[i][n];win=i;} }
-  return {X, n, dt, theta, hit, win, target, T};
+  // How legible the stimulus is: the same quantity that sets the target's drift.
+  const clarity = (strength - 0.6) / 2.2;
+  return {X, n, dt, theta, hit, win, target, T, clarity, seed: heroSeed};
+}
+// The stimulus panel: the target's photo, degraded in proportion to how weak
+// its drift is — blur and desaturation on the image, a grain layer on top.
+const heroStim = document.getElementById('heroStim');
+const heroNoise = document.getElementById('heroNoise');
+const heroCap = document.getElementById('heroStimCap');
+function heroShowStimulus(tr){
+  const deg = 1 - tr.clarity;
+  if(heroStim){
+    heroStim.src = 'assets/stimuli/' + LABELS[tr.target] + '.jpg';
+    heroStim.style.filter = `blur(${(4.5*deg).toFixed(1)}px) grayscale(${(0.6*deg).toFixed(2)}) contrast(${(1-0.3*deg).toFixed(2)})`;
+  }
+  if(heroNoise){
+    // Sized to its frame (a square set by CSS), not latched like the charts.
+    const dpr = window.devicePixelRatio || 1;
+    const w = heroNoise.clientWidth || 180, h = heroNoise.clientHeight || w;
+    heroNoise.width = Math.round(w*dpr); heroNoise.height = Math.round(h*dpr);
+    const ctx = heroNoise.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    const r = rng(tr.seed*7919), cells = 110, cw = w/cells, ch = h/cells;
+    for(let y=0;y<cells;y++) for(let x=0;x<cells;x++){
+      const v = Math.floor(r()*255);
+      ctx.fillStyle = `rgba(${v},${v},${v},${(0.5*deg*deg).toFixed(3)})`;
+      ctx.fillRect(x*cw, y*ch, cw+0.5, ch+0.5);
+    }
+  }
+  if(heroCap) heroCap.textContent = `Stimulus: ${LABELS[tr.target]} · clarity ${Math.round(100*tr.clarity)}%`;
 }
 function heroDraw(tr, upto){
   const {ctx,w,h} = setup(heroCv, window.innerWidth<600?240:320);
@@ -86,6 +115,7 @@ function heroDraw(tr, upto){
 function heroRun(){
   heroStop();
   const tr = heroTrial();
+  heroShowStimulus(tr);
   const said = () => { const ok = tr.win===tr.target; heroOut.innerHTML = `Choice: <b>${LABELS[tr.win]}</b> after <b>${Math.round(tr.hit*tr.dt*1000)} ms</b>` + (ok?'':' (an error: the stimulus favoured '+LABELS[tr.target]+')'); };
   if(reduce){ heroDraw(tr, tr.n); said(); return; }
   heroOut.textContent = 'Accumulating evidence…';
