@@ -102,6 +102,8 @@ input[type=range]{width:100%;accent-color:var(--ink)}
 .tab{border:1px solid var(--rule);background:#fff;border-radius:999px;padding:.45rem 1rem;font:inherit;font-size:.92rem;cursor:pointer;color:var(--ink)}
 .tab[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .tabpanel[hidden]{display:none}
+figure.race{margin:1.2rem 0 0}
+figure.race img{display:block;width:100%;max-width:960px;height:auto;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
 .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
 .chart{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:.9rem .9rem .6rem}
 .chart h4{font-family:var(--sans);font-weight:600;font-size:.92rem;margin:0 0 .3rem}

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 
@@ -196,6 +196,35 @@
   </div>
 </section>
 
+<section id="races">
+  <div class="wrap">
+    <div class="text">
+      <h2>Watch the trained model decide</h2>
+      <p>Each animation is the released NRM on two held-out test trials, one easy and one hard. Beside the stimulus runs one sampled race: the accumulators, the bound Θ(<b>c</b>) the model computes from that stimulus, its crossing time t* and the human RT for the same stimulus. Below each race, the share of 64 simulated races that pick the correct answer.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Race animations">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="r-rdm" id="rb-rdm">Random-dot motion</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="r-sc" id="rb-sc">Scene categorisation</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="r-sat" id="rb-sat">Speed–accuracy trade-off</button>
+    </div>
+
+    <div class="tabpanel" role="tabpanel" id="r-rdm" aria-labelledby="rb-rdm">
+      <p class="text">Dots drifting left at 51.2% and at 3.2% coherence. The motion-energy embedding changes frame by frame, and so does the push on each accumulator. With clear motion the left accumulator reaches the bound in about half a second and 94% of races choose left; at 3.2% the two stay close for longer and the share drops to 77%.</p>
+      <figure class="race"><img src="assets/nrm_rdm.gif" alt="Two random-dot motion trials, 51.2% and 3.2% coherence. Beside each dot video, the race of the left and right accumulators towards the bound, with the model's crossing time and the human RT." loading="lazy" width="960" height="640"><figcaption>The dots are drawn at 60 per frame instead of the experiment's 6, for legibility; the race is the model's response to the real trial.</figcaption></figure>
+    </div>
+
+    <div class="tabpanel" role="tabpanel" id="r-sc" aria-labelledby="rb-sc" hidden>
+      <p class="text">A clearly natural scene (discriminability 1.0) and one close to the category boundary (0.2). Both start from the same place; what differs is how fast the natural accumulator pulls away from the man-made one. 86% of races choose natural for the clear scene, 52% for the ambiguous one.</p>
+      <figure class="race"><img src="assets/nrm_sc.gif" alt="Two scene categorisation trials, discriminability 1.0 and 0.2. Beside each scene, the race of the natural and man-made accumulators towards the bound." loading="lazy" width="960" height="640"><figcaption>Stimuli from Sofer, Crouzet &amp; Serre (2015), CC BY 4.0.</figcaption></figure>
+    </div>
+
+    <div class="tabpanel" role="tabpanel" id="r-sat" aria-labelledby="rb-sat" hidden>
+      <p class="text">The same blurred boat under a 500 ms and a 1500 ms deadline. Sixteen accumulators race, one per category, and the deadline is one more input to the encoder. With 1.5 s the boat accumulator wins 98% of races; at 500 ms only about half, and the winning race lands after the beep. People shown this image at 500 ms almost never name it correctly.</p>
+      <figure class="race"><img src="assets/nrm_sat.gif" alt="The same blurred boat image under a 500 ms and a 1500 ms deadline. Beside it, a 16-way race: the boat accumulator in blue, the distractors in grey, with the deadline, the model's crossing time and the median human RT." loading="lazy" width="960" height="640"><figcaption>ImageNet images cannot be redistributed: the photo is a CC0 boat from Wikimedia Commons with the trial's perturbation (greyscale, blur σ = 3); the race is the model's response to the real image.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <section id="brain">
   <div class="wrap">
     <div class="text">
@@ -238,9 +267,9 @@
 </section>
 
 <footer>
-  <div class="wrap">Simulations on this page are simplified, illustrative races written for this site; they are not the trained NRM. All reported numbers come from the paper. Stimulus photos: Wikimedia Commons, CC0 (<a href="https://commons.wikimedia.org/wiki/File:Domestic_shorthair_cat_portrait_in_grass.jpg">cat</a>, <a href="https://commons.wikimedia.org/wiki/File:Dog_resting_on_the_grass.jpg">dog</a>, <a href="https://commons.wikimedia.org/wiki/File:PINK_AUTOMOBILE_MANUFACTURED_BY_CADILLAC.jpg">car</a>, <a href="https://commons.wikimedia.org/wiki/File:Blue_fishing_boat_harbour_Eretria_Euboea_Greece.jpg">boat</a>).</div>
+  <div class="wrap">The interactive races at the top of this page are simplified illustrations written for this site, not the trained NRM; the animations under “Watch the trained model decide” are the released NRM on held-out test trials. All reported numbers come from the paper. Stimulus photos: Wikimedia Commons, CC0 (<a href="https://commons.wikimedia.org/wiki/File:Domestic_shorthair_cat_portrait_in_grass.jpg">cat</a>, <a href="https://commons.wikimedia.org/wiki/File:Dog_resting_on_the_grass.jpg">dog</a>, <a href="https://commons.wikimedia.org/wiki/File:PINK_AUTOMOBILE_MANUFACTURED_BY_CADILLAC.jpg">car</a>, <a href="https://commons.wikimedia.org/wiki/File:Blue_fishing_boat_harbour_Eretria_Euboea_Greece.jpg">boat</a>).</div>
 </footer>
 
-<script src="main.js?v=3"></script>
+<script src="main.js?v=4"></script>
 </body>
 </html>

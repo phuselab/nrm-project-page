@@ -352,9 +352,12 @@ function drawResults(){
 }
 
 // tabs
-const tabs=[...document.querySelectorAll('.tab')];
-tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>{ x.setAttribute('aria-selected', x===t); $(x.getAttribute('aria-controls')).hidden = x!==t; }); }));
-tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length]; n.focus(); n.click(); } }));
+// each tablist switches only its own panels
+document.querySelectorAll('.tabs').forEach(list=>{
+  const tabs=[...list.querySelectorAll('.tab')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>{ x.setAttribute('aria-selected', x===t); $(x.getAttribute('aria-controls')).hidden = x!==t; }); }));
+  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length]; n.focus(); n.click(); } }));
+});
 
 $('copyBib').addEventListener('click', async () => { try{ await navigator.clipboard.writeText($('bibText').textContent); $('copyBib').textContent='Copied'; }catch(e){ $('copyBib').textContent='Select and copy the text above'; } setTimeout(()=>$('copyBib').textContent='Copy BibTeX',1800); });
 
